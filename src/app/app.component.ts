@@ -21,7 +21,7 @@ export class AppComponent {
   onSubmit(){
     this.submit = true;
     this.users.push(this.user)
-    console.log(this.user)
+    console.log(this.user)    
     this.user = {
       firstName:"",
       lastName:"",

@@ -5,7 +5,7 @@
   </p>
 </div>
 
-<form (submit)="onSubmit()" name="reg" #formData='ngForm'>
+<form (submit)="onSubmit()" name="reg" #formData='ngForm'  >
   <label for="firstName">First Name: <input
      type="text"
      name="firstName"
@@ -15,7 +15,7 @@
      #firstName='ngModel'
      [(ngModel)]="user.firstName"></label>
      <div *ngIf="firstName.errors">
-    <span [hidden]="!firstName.errors.required">First Name is required</span>
+      <span [hidden]="firstName.untouched && firstName.errors.required">First Name is required</span>
     </div>
     <br>
   <label for="lastName">Last Name: <input 
@@ -27,9 +27,9 @@
     #lastName='ngModel' 
     [(ngModel)]="user.lastName"></label>
     <div *ngIf="lastName.errors">
-    <span  [hidden]="!lastName.errors.required">Last Name is required</span>
+    <span  [hidden]="lastName.untouched && lastName.errors.required">Last Name is required</span>
   </div><br>
-  <label for="email">email: <input 
+  <label for="email">Email: <input 
     type="text" 
     name="email"
     required
@@ -38,7 +38,7 @@
     #email='ngModel' 
     [(ngModel)]="user.email"></label>
     <div *ngIf="email.errors">
-    <span [hidden]="!email.errors.required">Email is required</span>
+    <span [hidden]="email.untouched && email.errors.required">Email is required</span>
     </div><br>
   <label for="password">Password: <input 
     type="text" 
@@ -49,7 +49,7 @@
     #password='ngModel' 
     [(ngModel)]="user.password"></label>
     <div *ngIf="password.errors">
-    <span [hidden]="!password.errors.required">Password is required</span>
+    <span [hidden]="password.untouched && password.errors.required">Password is required</span>
     </div><br>
 <label for="confirmPW">Confirm: <input 
     type="text" 
@@ -60,7 +60,7 @@
     #confirmPW='ngModel' 
     [(ngModel)]="user.confrimPW"></label>
   <div *ngIf="confirmPW.errors">
-  <span [hidden]="!confirmPW.errors.required">Confirmation password is required</span>
+  <span [hidden]="confirmPW.untouched && confirmPW.errors.required">Confirmation password is required</span>
   </div>
   <div > 
     <span *ngIf="user.confrimPW !== user.password">your passwords dont match</span>
@@ -76,7 +76,7 @@
     <option value="FL">FL</option>
   </select></label>
   <div *ngIf="state.errors">
-    <span [hidden]="!confirmPW.errors.required">State is required</span>
+    <span [hidden]="state.untouched && state.errors.required">State is required</span>
   </div>
 
 
@@ -84,9 +84,11 @@
   <input type="submit">
   </div>
 </form>
-
-
+<!-- 
+<div>{{firstName.untouched | json }}</div> 
 
 {{formData.form.valid | json}}
 
-{{user | json}}
+
+
+{{user | json}} -->
