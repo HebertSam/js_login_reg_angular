@@ -1,20 +1,92 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<h1>{{title}}</h1>
+<div *ngFor="let user of users; let idx = index">
+  <p *ngIf="submit">Thanks you for registering with us {{users[idx].firstName}} . We just sent you a confirmation email at {{users[idx].email}}
+  have a wonderful day!
+  </p>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<form (submit)="onSubmit()" name="reg" #formData='ngForm'>
+  <label for="firstName">First Name: <input
+     type="text"
+     name="firstName"
+     required
+     minlength="3"
+     maxlength="20"
+     #firstName='ngModel'
+     [(ngModel)]="user.firstName"></label>
+     <div *ngIf="firstName.errors">
+    <span [hidden]="!firstName.errors.required">First Name is required</span>
+    </div>
+    <br>
+  <label for="lastName">Last Name: <input 
+    type="text" 
+    name="lastName"
+    required
+    minlength="3"
+    maxlength="20"
+    #lastName='ngModel' 
+    [(ngModel)]="user.lastName"></label>
+    <div *ngIf="lastName.errors">
+    <span  [hidden]="!lastName.errors.required">Last Name is required</span>
+  </div><br>
+  <label for="email">email: <input 
+    type="text" 
+    name="email"
+    required
+    minlength="5"
+    maxlength="25"
+    #email='ngModel' 
+    [(ngModel)]="user.email"></label>
+    <div *ngIf="email.errors">
+    <span [hidden]="!email.errors.required">Email is required</span>
+    </div><br>
+  <label for="password">Password: <input 
+    type="text" 
+    name="password"
+    required
+    minlength="5"
+    maxlength="25"
+    #password='ngModel' 
+    [(ngModel)]="user.password"></label>
+    <div *ngIf="password.errors">
+    <span [hidden]="!password.errors.required">Password is required</span>
+    </div><br>
+<label for="confirmPW">Confirm: <input 
+    type="text" 
+    name="confrimPW"
+    required
+    minlength="5"
+    maxlength="25"
+    #confirmPW='ngModel' 
+    [(ngModel)]="user.confrimPW"></label>
+  <div *ngIf="confirmPW.errors">
+  <span [hidden]="!confirmPW.errors.required">Confirmation password is required</span>
+  </div>
+  <div > 
+    <span *ngIf="user.confrimPW !== user.password">your passwords dont match</span>
+  </div><br>
+  <label for="state">State: <select name="state"
+    required
+    #state='ngModel'
+    [(ngModel)]="user.state">
+    <option value="VA">VA</option>
+    <option value="NY">NY</option>
+    <option value="NC">NC</option>
+    <option value="PA">PA</option>
+    <option value="FL">FL</option>
+  </select></label>
+  <div *ngIf="state.errors">
+    <span [hidden]="!confirmPW.errors.required">State is required</span>
+  </div>
+
+
+  <div *ngIf="formData.form.valid && user.password === user.confrimPW">
+  <input type="submit">
+  </div>
+</form>
+
+
+
+{{formData.form.valid | json}}
+
+{{user | json}}
